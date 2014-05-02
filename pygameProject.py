@@ -70,7 +70,73 @@ class GameSpace:
 
     def title(self):
         print "TITLE SCREEN"
+        #set up game title
+        self.titlefont = pygame.font.Font("media/fonts/Starjedi.ttf",86)
+        self.titleText = self.titlefont.render("Trench Run", 1, (255, 255, 255))
+        self.titlepos = self.titleText.get_rect()
+        self.titlepos.centerx = self.screen.get_rect().centerx
 
+        #single player title
+        self.playerfont = pygame.font.Font("media/fonts/Starjedi.ttf", 36)
+        self.player1Text = self.playerfont.render("Single Player", 1, (255, 0, 0))
+        self.player1pos = self.player1Text.get_rect()
+        self.player1pos.centerx = self.screen.get_rect().centerx
+        self.player1pos.y = 165
+
+        #multiplayer title
+        self.player2Text = self.playerfont.render("Two Players", 1, (255, 0, 0))
+        self.player2pos = self.player2Text.get_rect()
+        self.player2pos.centerx = self.screen.get_rect().centerx
+        self.player2pos.y = 265
+
+        #instructions title
+        self.instructionText = self.playerfont.render("instructions", 1, (255, 255, 255))
+        self.instpos = self.instructionText.get_rect()
+        self.instpos.centerx = self.screen.get_rect().centerx
+        self.instpos.y = 365
+
+        #blit text elements to screen
+        self.screen.blit(self.titleText, self.titlepos)
+        self.screen.blit(self.player1Text, self.player1pos)
+        self.screen.blit(self.player2Text, self.player2pos)
+        self.screen.blit(self.instructionText, self.instpos)
+
+        pygame.display.flip()
+        
+        #loop to wait for clicks
+        #while title running variable
+        titleRunning = 1 #variable to keep track of when title options should be running
+        while titleRunning:
+            for event in pygame.event.get():
+                if event.type == QUIT: #if user clicks red x in corner, exit
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed()[0]: #if left mouse button is clicked
+                        mouse_x, mouse_y = pygame.mouse.get_pos()
+                        #if event.button == 1: should do same thing
+                        #if mouse pos is in single player box, get ship selection ready
+                        if self.player1pos.collidepoint(mouse_x, mouse_y):
+                            print "First option pressed"
+                            self.screen.fill(self.black)
+                            #make second 2 options disappear, show ship options as new buttons
+                        #if mouse pos is in multiplayer box, wait for connection (?)
+                        if self.player2pos.collidepoint(mouse_x, mouse_y):
+                            print "Waiting for connection"
+                            self.screen.fill(self.black)
+                            #Add networking elements here
+                        #if mouse pos is in instructions box, open instructions page
+                        if self.instpos.collidepoint(mouse_x, mouse_y):
+                            #bring up a new instructions screen
+                            print "instructions options pressed"
+                            self.screen.fill(self.black)
+                            titleRunning = 0
+
+            self.screen.blit(self.titleText, self.titlepos)
+
+    
+                    
+                    
     def main(self):
         #enter loop
         while True:
@@ -128,7 +194,6 @@ class GameSpace:
                 pygame.draw.rect(self.screen, (50, 255, 50), item.rect, 1)
 
             self.screen.blit(self.player.image, self.player.rect)
-            self.screen.blit(self.text, self.textpos)
 
             pygame.display.flip()
 
