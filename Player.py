@@ -4,20 +4,20 @@ from pygame.locals import *
 from Lazer import Lazer
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, gs=None):
+    def __init__(self, player_type=1, gs=None):
         pygame.sprite.Sprite.__init__(self)
 
-        player_type = 3
+        self.player_type = player_type
         self.gs = gs
-        if player_type == 1:
+        if self.player_type == 1:
             self.image = pygame.image.load("media/Rebel/sw_xwing.png")
             self.image = pygame.transform.scale(self.image, (45, 39))
             self.move_speed = 15
-        elif player_type == 2:
+        elif self.player_type == 2:
             self.image = pygame.image.load("media/laser.png")
             self.image = pygame.transform.scale(self.image, (80, 60))
             self.move_speed = 10
-        elif player_type == 3:
+        elif self.player_type == 3:
             self.image = pygame.image.load("media/Rebel/falcon.png")
             self.image = pygame.transform.scale(self.image, (80, 105))
             self.move_speed = 5
