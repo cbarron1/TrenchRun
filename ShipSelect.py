@@ -10,6 +10,9 @@ class ShipSelect:
         self.my_ship = 1
         self.centerX = self.gs.screen.get_rect().centerx
 
+        self.goodluck_sound = pygame.mixer.Sound("media/audio/goodluck.wav")
+        self.junk_sound = pygame.mixer.Sound("media/audio/whatjunk.wav")
+
         self.selected_rect = pygame.Rect(0, 0, 140, 140)
         self.selected_rect.centerx = self.centerX - (self.gs.width / 3)
         self.selected_rect.centery = 236
@@ -101,8 +104,16 @@ class ShipSelect:
                             break
                         elif self.startTextPos.collidepoint(mouse_x, mouse_y):
                             self.gs.player = Player(self.my_ship,self.gs)
+                            if self.my_ship == 1:
+                                self.goodluck_sound.play()
+                                pygame.time.delay(3000)
+                            elif self.my_ship == 3:
+                                self.junk_sound.play()
+                                pygame.time.delay(1600)
+
                             self.selecting = False
                             self.gs.titleScreen.titleRunning = False
+
 
 
             if self.my_ship == 1:

@@ -23,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pygameProject.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pygameProject.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pygameProject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="31" selection-start="1922" selection-end="1922" vertical-scroll-proportion="-2.6306534" vertical-offset="2084" max-vertical-offset="2482">
+            <state line="42" column="59" selection-start="1206" selection-end="1206" vertical-scroll-proportion="0.0" vertical-offset="962" max-vertical-offset="2482">
               <folding />
             </state>
           </provider>
@@ -43,10 +43,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShipSelect.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ShipSelect.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ShipSelect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="68" selection-start="4697" selection-end="4697" vertical-scroll-proportion="0.0" vertical-offset="2577" max-vertical-offset="2975">
+            <state line="111" column="55" selection-start="5056" selection-end="5056" vertical-scroll-proportion="0.76884425" vertical-offset="1581" max-vertical-offset="3162">
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -114,8 +114,8 @@
         <option value="$PROJECT_DIR$/Unit.py" />
         <option value="$PROJECT_DIR$/Lazer.py" />
         <option value="$PROJECT_DIR$/Player.py" />
-        <option value="$PROJECT_DIR$/pygameProject.py" />
         <option value="$PROJECT_DIR$/TitleScreen.py" />
+        <option value="$PROJECT_DIR$/pygameProject.py" />
         <option value="$PROJECT_DIR$/ShipSelect.py" />
       </list>
     </option>
@@ -198,7 +198,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Rebel" />
+              <option name="myItemId" value="audio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -371,7 +371,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -487,15 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ShipSelect.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="68" selection-start="4697" selection-end="4697" vertical-scroll-proportion="0.0" vertical-offset="1829" max-vertical-offset="2975">
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Unit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="41" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1156">
@@ -533,8 +524,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pygameProject.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="31" selection-start="1922" selection-end="1922" vertical-scroll-proportion="-2.6306534" vertical-offset="2084" max-vertical-offset="2482">
+        <state line="42" column="59" selection-start="1206" selection-end="1206" vertical-scroll-proportion="0.0" vertical-offset="962" max-vertical-offset="2482">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShipSelect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="55" selection-start="5056" selection-end="5056" vertical-scroll-proportion="0.76884425" vertical-offset="1581" max-vertical-offset="3162">
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

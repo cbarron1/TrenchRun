@@ -40,8 +40,8 @@ class GameSpace:
     def __init__(self):
         pygame.init()
         #pygame.key.set_repeat(1,50)
-        self.lazer_sound = pygame.mixer.Sound("media/screammachine.wav")
-        self.explosion_sound = pygame.mixer.Sound("media/explode.wav")
+        self.lazer_sound = pygame.mixer.Sound("media/audio/screammachine.wav")
+        self.explosion_sound = pygame.mixer.Sound("media/audio/explode.wav")
 
         self.size = self.width, self.height = 960, 540
         self.black = 0, 0, 0
