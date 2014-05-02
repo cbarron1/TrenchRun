@@ -12,7 +12,7 @@ class Lazer(pygame.sprite.Sprite):
         self.height = self.rect.height
         self.width = self.rect.width
 
-        self.start_x = self.parent.rect.x + self.parent.rect.width/2
+        self.start_x = self.parent.rect.x + 3*self.parent.rect.width/4
         self.start_y = self.parent.rect.y + self.parent.rect.height/2
         self.rect = self.rect.move((self.start_x, self.start_y))
         self.orig_img = self.image
@@ -25,7 +25,7 @@ class Lazer(pygame.sprite.Sprite):
         #print "SIN: "+ str(math.sin(self.angle))
         self.tick_count = 0
 
-        self.move_speed = 10
+        self.move_speed = 20
         self.move_x = self.move_speed * math.cos(self.angle)
         self.move_y = self.move_speed * math.sin(self.angle)
 
