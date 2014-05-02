@@ -40,7 +40,7 @@ class GameSpace:
     def __init__(self):
         pygame.init()
         #pygame.key.set_repeat(1,50)
-        self.lazer_sound = pygame.mixer.Sound("media/audio/screammachine.wav")
+        self.lazer_sound = pygame.mixer.Sound("media/audio/blaster.wav")
         self.explosion_sound = pygame.mixer.Sound("media/audio/explode.wav")
 
         self.size = self.width, self.height = 960, 540
@@ -59,7 +59,7 @@ class GameSpace:
 
         self.clock = pygame.time.Clock()
 
-        self.player = Player(1,self)
+        self.player = Player(1, self)
         self.enemy = Enemy(self)
 
         self.enemies = list()
