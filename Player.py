@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image, (45, 39))
             self.move_speed = 15
         elif self.player_type == 2:
-            self.image = pygame.image.load("media/laser.png")
+            self.image = pygame.image.load("media/Rebel/seraph.png")
             self.image = pygame.transform.scale(self.image, (80, 60))
             self.move_speed = 10
         elif self.player_type == 3:

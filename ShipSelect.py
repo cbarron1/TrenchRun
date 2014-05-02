@@ -68,7 +68,10 @@ class ShipSelect:
         self.xwing_rect.centerx = self.centerX - (self.gs.width / 3)
         self.xwing_rect.centery = 236
 
-        self.seraph_img = pygame.image.load("media/laser.png")
+        self.seraph_img = pygame.image.load("media/Rebel/seraph.png")
+        self.seraph_rect = self.seraph_img.get_rect()
+        self.seraph_rect.centerx = self.centerX
+        self.seraph_rect.centery = 236
 
         self.falcon_img = pygame.image.load("media/Rebel/falcon.png")
         self.falcon_rect = self.falcon_img.get_rect()
@@ -175,6 +178,7 @@ class ShipSelect:
 
             self.gs.screen.blit(self.xwing_img, self.xwing_rect)
             self.gs.screen.blit(self.falcon_img, self.falcon_rect)
+            self.gs.screen.blit(self.seraph_img, self.seraph_rect)
 
             pygame.draw.rect(self.gs.screen, (64, 64, 255), self.selected_rect, 1)
 
