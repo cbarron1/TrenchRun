@@ -53,7 +53,7 @@ class TieFighter(pygame.sprite.Sprite):
 
             self.tieRect=self.tieImage.get_rect()
             self.orig_tImage=self.tieImage
-
+            self.shipType = 2 #differentiate between ship types
             self.hp = 30
             self.alive = True
             start_x = self.gs.width
@@ -82,7 +82,7 @@ class TieBomber(pygame.sprite.Sprite):
             self.bomberImage=pygame.transform.rotate(self.bomberImage, -90)
             self.bomberRect=self.bomberImage.get_rect()
             self.orig_bImage=self.bomberImage#not sure if this is necessary
-
+            self.shipType = 1 #differentiate between ship types
             self.hp = 40
             self.alive = True
             start_x = self.gs.width
@@ -111,7 +111,7 @@ class TieInterceptor(pygame.sprite.Sprite):
             self.interceptorImage=pygame.transform.rotate(self.interceptorImage, -90)
             self.interceptorRect=self.interceptorImage.get_rect()
             self.orig_iImage=self.interceptorImage#not sure if this is necessary
-
+            self.shipType = 3 #differentiate between ship types
             self.hp = 20
             self.alive = True
             start_x = self.gs.width

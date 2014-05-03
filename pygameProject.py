@@ -89,7 +89,7 @@ class GameSpace:
                 tie=TieFighter(self)
                 self.enemies.append(tie)
             else:
-                self.bomber=TieBomber(self)
+                bomber=TieBomber(self)
                 self.enemies.append(bomber)
             #handle user inputs HERE
             for event in pygame.event.get():
@@ -125,14 +125,15 @@ class GameSpace:
 
             #control enemy ships
             for enemy in self.enemies:
-                bomber.tick()
-                self.screen.blit(bomber.bomberImage, bomber.bomberRect)
-            for tie in self.enemies:
-                tie.tick()
-                self.screen.blit(tie.tieImage, tie.tieRect)
-            for interceptor in self.enemies:
-                interceptor.tick()
-                self.screen.blit(interceptor.interceptorImage, interceptor.interceptorRect)
+                if enemy.shipType == 1:
+                    enemy.tick()
+                    self.screen.blit(bomber.bomberImage, bomber.bomberRect)
+                elif enemy.shipType == 2:
+                    enemy.tick()
+                    self.screen.blit(tie.tieImage, tie.tieRect)
+                elif enemy.shipType ==3:
+                    enemy.tick()
+                    self.screen.blit(interceptor.interceptorImage, interceptor.interceptorRect)
             for lazer in self.lazers:
                 lazer.tick()
                 self.screen.blit(lazer.image, lazer.rect)
