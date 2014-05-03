@@ -77,20 +77,32 @@ class GameSpace:
                     
     def main(self):
         distanceTravelled = 0
+        bombers=0
+        ties=0
+        interceptors=0
         #enter loop
         while True:
             self.clock.tick(self.fps)
             
             #create enemy ships based on distanceTravelled
-            if ((distanceTravelled % 5) < 3):
+            if ((distanceTravelled % 50) < 3):
                 interceptor=TieInterceptor(self)
                 self.enemies.append(interceptor)
+                interceptors = interceptors+1
+                #print "interceptor: "
+                #print interceptor
             elif (distanceTravelled == 4) or (distanceTravelled == 5):
                 tie=TieFighter(self)
                 self.enemies.append(tie)
+                ties=ties+1
+                #print "tie"
+                #print tie
             else:
                 bomber=TieBomber(self)
                 self.enemies.append(bomber)
+                bombers=bombers+1
+                #print "bomber:"
+                #print bomber
             #handle user inputs HERE
             for event in pygame.event.get():
                 if event.type == QUIT:

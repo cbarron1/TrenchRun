@@ -129,5 +129,5 @@ class TieInterceptor(pygame.sprite.Sprite):
             if self.hp <= 0:
                 self.gs.explosion_sound.play()
                 self.alive = False
-                new_explosion = Explosion(self.bomberRect.x, self.bomberRect.y)
+                new_explosion = Explosion(self.interceptorRect.x, self.interceptorRect.y)
                 self.gs.explosions.append(new_explosion)
