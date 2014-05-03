@@ -61,9 +61,9 @@ class GameSpace:
 
         self.player = Player(1, self)
         self.enemy = Enemy(self)
-        self.tie = TieFighter(self)
-        self.bomber=TieBomber(self)
-        self.interceptor=TieInterceptor(self)
+        #self.tie = TieFighter(self)
+        #self.bomber=TieBomber(self)
+        
         self.enemies = list()
         self.lazers = list()
         self.explosions = list()
@@ -80,7 +80,17 @@ class GameSpace:
         #enter loop
         while True:
             self.clock.tick(self.fps)
-
+            
+            #create enemy ships based on distanceTravelled
+            if ((distanceTravelled % 5) < 3):
+                interceptor=TieInterceptor(self)
+                self.enemies.append(interceptor)
+            elif (distanceTravelled == 4) or (distanceTravelled == 5):
+                tie=TieFighter(self)
+                self.enemies.append(tie)
+            else:
+                self.bomber=TieBomber(self)
+                self.enemies.append(bomber)
             #handle user inputs HERE
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -106,23 +116,29 @@ class GameSpace:
             self.player.tick()
             self.screen.fill(self.black)
             self.enemy.tick()
-            self.tie.tick()
-            self.bomber.tick()
-            self.interceptor.tick()
 
             self.screen.blit(self.background.image, self.background.rect)
             self.screen.blit(self.background2.image, self.background2.rect)
             self.background.tick()
             self.background2.tick()
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
+
+            #control enemy ships
+            for enemy in self.enemies:
+                bomber.tick()
+                self.screen.blit(bomber.bomberImage, bomber.bomberRect)
+            for tie in self.enemies:
+                tie.tick()
+                self.screen.blit(tie.tieImage, tie.tieRect)
+            for interceptor in self.enemies:
+                interceptor.tick()
+                self.screen.blit(interceptor.interceptorImage, interceptor.interceptorRect)
             for lazer in self.lazers:
                 lazer.tick()
                 self.screen.blit(lazer.image, lazer.rect)
                 if lazer.rect.x > self.width or lazer.rect.y > self.height or lazer.rect.x < 0 or lazer.rect.y < 0:
                     self.lazers.remove(lazer)
-            self.screen.blit(self.tie.tieImage, self.tie.tieRect)
-            self.screen.blit(self.interceptor.interceptorImage, self.interceptor.interceptorRect)
-            self.screen.blit(self.bomber.bomberImage, self.bomber.bomberRect)
+                    
             if self.enemy.alive:
                 self.screen.blit(self.enemy.image, self.enemy.rect)
 
