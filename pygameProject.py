@@ -6,7 +6,7 @@ import sys
 import pygame
 from pygame.locals import *
 from Player import Player
-from Enemy import Enemy
+from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor
 from Unit import Unit
 from TitleScreen import TitleScreen
 
@@ -61,7 +61,9 @@ class GameSpace:
 
         self.player = Player(1, self)
         self.enemy = Enemy(self)
-
+        self.tie = TieFighter(self)
+        self.bomber=TieBomber(self)
+        self.interceptor=TieInterceptor(self)
         self.enemies = list()
         self.lazers = list()
         self.explosions = list()
@@ -74,6 +76,7 @@ class GameSpace:
         self.titleScreen.title()
                     
     def main(self):
+        distanceTravelled = 0
         #enter loop
         while True:
             self.clock.tick(self.fps)
@@ -103,18 +106,23 @@ class GameSpace:
             self.player.tick()
             self.screen.fill(self.black)
             self.enemy.tick()
+            self.tie.tick()
+            self.bomber.tick()
+            self.interceptor.tick()
 
             self.screen.blit(self.background.image, self.background.rect)
             self.screen.blit(self.background2.image, self.background2.rect)
             self.background.tick()
             self.background2.tick()
-
+            distanceTravelled = distanceTravelled + 1 #add to distance travelled
             for lazer in self.lazers:
                 lazer.tick()
                 self.screen.blit(lazer.image, lazer.rect)
                 if lazer.rect.x > self.width or lazer.rect.y > self.height or lazer.rect.x < 0 or lazer.rect.y < 0:
                     self.lazers.remove(lazer)
-
+            self.screen.blit(self.tie.tieImage, self.tie.tieRect)
+            self.screen.blit(self.interceptor.interceptorImage, self.interceptor.interceptorRect)
+            self.screen.blit(self.bomber.bomberImage, self.bomber.bomberRect)
             if self.enemy.alive:
                 self.screen.blit(self.enemy.image, self.enemy.rect)
 
