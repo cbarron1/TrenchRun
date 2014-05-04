@@ -61,8 +61,6 @@ class GameSpace:
 
         self.player = Player(1, self)
         self.enemy = Enemy(self)
-        #self.tie = TieFighter(self)
-        #self.bomber=TieBomber(self)
         
         self.enemies = list()
         self.lazers = list()

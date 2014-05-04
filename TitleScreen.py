@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 from ShipSelect import ShipSelect
+from Instructions import Instructions
 
 class TitleScreen:
     def __init__(self, gs):
@@ -78,7 +79,9 @@ class TitleScreen:
                             #bring up a new instructions screen
                             print "instructions options pressed"
                             self.gs.screen.fill(self.gs.black)
-                            self.titleRunning = False
+                            instruction_screen = Instructions(self.gs)
+                            instruction_screen.readInstructions()
+                            #self.titleRunning = False
 
             self.gs.screen.fill(self.gs.black)
             self.gs.screen.blit(self.titleText, self.titlepos)
