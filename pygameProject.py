@@ -1,5 +1,5 @@
-#Cody Barron
-#PyGame Primer
+#Cody Barron & Laura Cronin
+#Trench Run
 
 import sys
 #import os
@@ -91,13 +91,13 @@ class GameSpace:
                 interceptors = interceptors+1
                 #print "interceptor: "
                 #print interceptor
-            elif (distanceTravelled == 4) or (distanceTravelled == 5):
+            elif ((distanceTravelled % 50) == 4) or ((distanceTravelled % 50)== 5):
                 tie=TieFighter(self)
                 self.enemies.append(tie)
                 ties=ties+1
                 #print "tie"
                 #print tie
-            else:
+            elif (distanceTravelled % 50) == 6:
                 bomber=TieBomber(self)
                 self.enemies.append(bomber)
                 bombers=bombers+1
