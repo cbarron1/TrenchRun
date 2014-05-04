@@ -2,6 +2,7 @@ import pygame
 import math
 from pygame.locals import *
 from Lazer import Lazer
+from Explosion import Explosion
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, player_type=1, gs=None):
@@ -13,14 +14,17 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.image.load("media/Rebel/sw_xwing.png")
             self.image = pygame.transform.scale(self.image, (45, 39))
             self.move_speed = 15
+            self.hp = 10
         elif self.player_type == 2:
             self.image = pygame.image.load("media/Rebel/seraph.png")
             self.image = pygame.transform.scale(self.image, (80, 60))
             self.move_speed = 10
+            self.hp = 30
         elif self.player_type == 3:
             self.image = pygame.image.load("media/Rebel/falcon.png")
             self.image = pygame.transform.scale(self.image, (80, 105))
             self.move_speed = 5
+            self.hp = 50
         self.image = pygame.transform.rotate(self.image, -90)
 
         self.rect = self.image.get_rect()
@@ -31,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.orig_img = self.image
         self.angle = 0
         self.to_fire = False
+        self.alive = True
 
         #self.move_speed = 5
         self.move_right = False
@@ -40,6 +45,21 @@ class Player(pygame.sprite.Sprite):
 
     def tick(self):
         mx, my = pygame.mouse.get_pos()
+
+        if self.alive:
+            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
+            for collision in collision_list:
+                if self.gs.lazers[collision].active:
+                    self.gs.lazers[collision].active = False
+                    self.hp -= 1
+
+            if self.hp <= 0:
+                #remove image of ship
+                self.gs.explosion_sound.play()
+                self.alive = False
+                new_explosion = Explosion(self.rect.x, self.rect.y)
+                self.gs.explosions.append(new_explosion)
+                #need procedure for ending game
 
         if self.to_fire:
             new_lazer = Lazer(self.gs, self)

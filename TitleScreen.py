@@ -7,7 +7,7 @@ class TitleScreen:
     def __init__(self, gs):
         self.gs = gs
         self.titleRunning = True
-
+        
         self.titlefont = pygame.font.Font("media/fonts/Starjedi.ttf", 86)
         self.titleText = self.titlefont.render("Trench Run", 1, (255, 255, 255))
         self.titlepos = self.titleText.get_rect()
@@ -43,11 +43,12 @@ class TitleScreen:
     def title(self):
         print "TITLE SCREEN"
         #set up game title
-
+        self.imperial_music = pygame.mixer.Sound("media/audio/imperialMarch.wav")
         #loop to wait for clicks
         #while title running variable
           #variable to keep track of when title options should be running
         while self.titleRunning:
+            self.imperial_music.play()
             for event in pygame.event.get():
                 if event.type == QUIT:  #if user clicks red x in corner, exit
                     pygame.quit()
@@ -86,3 +87,4 @@ class TitleScreen:
             self.gs.screen.blit(self.instructionText, self.instpos)
 
             pygame.display.flip()
+        self.imperial_music.stop()
