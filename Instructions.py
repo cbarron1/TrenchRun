@@ -13,7 +13,7 @@ class Instructions:
         self.reading = True #false when user clicks back button
 
         #Instructions title
-        self.titlefont = pygame.font.Font("media/fonts/Starjedi.ttf", 86)
+        self.titlefont = pygame.font.Font("media/fonts/Starjedi.ttf", 64)
         self.instructionsText = self.titlefont.render("instructions", 1, (255, 255, 255))
         self.instPos = self.instructionsText.get_rect()
         self.instPos.centerx = self.gs.screen.get_rect().centerx

@@ -78,6 +78,7 @@ class GameSpace:
         bombers=0
         ties=0
         interceptors=0
+        toGo = 0
         #enter loop
         while True:
             self.clock.tick(self.fps)
@@ -131,8 +132,14 @@ class GameSpace:
             self.screen.blit(self.background2.image, self.background2.rect)
             self.background.tick()
             self.background2.tick()
+            
+             
+            if (distanceTravelled % 100) == 0:
+                gameTime = distanceTravelled / 100
+                toGo = 2500-gameTime
+                print gameTime
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
-
+                
             #control enemy ships
             for enemy in self.enemies:
                 if enemy.shipType == 1:
@@ -165,6 +172,21 @@ class GameSpace:
                 pygame.draw.rect(self.screen, (50, 255, 50), item.rect, 1)
 
             self.screen.blit(self.player.image, self.player.rect)
+
+            #Navigation Computer graphic
+            self.computerImage = pygame.image.load("media/navComputer.png")
+            self.compRect = self.computerImage.get_rect()
+            self.compRect.centerx = 480 # center of screen
+            self.compRect.centery = 465 #?
+            self.screen.blit(self.computerImage, self.compRect)
+            self.navCompFont = pygame.font.Font("media/fonts/Starjedi.ttf", 15) # change font?
+            toGoStr = str(toGo)
+            self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
+            self.compTextPos = self.compText.get_rect()
+            self.compTextPos.centerx = 480
+            self.compTextPos.centery = 530 #?
+            self.screen.blit(self.compText, self.compTextPos)
+            
 
             pygame.display.flip()
 

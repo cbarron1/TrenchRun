@@ -3,6 +3,7 @@ from pygame.locals import *
 import math
 from Explosion import Explosion
 import random
+from Lazer import Lazer
 
 
 class Enemy(pygame.sprite.Sprite):
