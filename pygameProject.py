@@ -134,9 +134,9 @@ class GameSpace:
             self.background2.tick()
             
              
-            if (distanceTravelled % 100) == 0:
-                gameTime = distanceTravelled / 100
-                toGo = 2500-gameTime
+            if (distanceTravelled % 50) == 0:
+                gameTime = distanceTravelled / 50
+                toGo = 2500-gameTime #may want to speed up this timing
                 print gameTime
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
                 
@@ -174,18 +174,22 @@ class GameSpace:
             self.screen.blit(self.player.image, self.player.rect)
 
             #Navigation Computer graphic
-            self.computerImage = pygame.image.load("media/navComputer.png")
-            self.compRect = self.computerImage.get_rect()
-            self.compRect.centerx = 480 # center of screen
-            self.compRect.centery = 465 #?
-            self.screen.blit(self.computerImage, self.compRect)
-            self.navCompFont = pygame.font.Font("media/fonts/Starjedi.ttf", 15) # change font?
-            toGoStr = str(toGo)
-            self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
-            self.compTextPos = self.compText.get_rect()
-            self.compTextPos.centerx = 480
-            self.compTextPos.centery = 530 #?
-            self.screen.blit(self.compText, self.compTextPos)
+            if toGo == 200:
+                self.navSound = pygame.mixer.Sound("media/audio/computerOff.png")
+                self.navSound.play()
+            if toGo > 200 : 
+                self.computerImage = pygame.image.load("media/navComputer.png")
+                self.compRect = self.computerImage.get_rect()
+                self.compRect.centerx = 480 # center of screen
+                self.compRect.centery = 465 #?
+                self.screen.blit(self.computerImage, self.compRect)
+                self.navCompFont = pygame.font.Font("media/fonts/Starjedi.ttf", 15) # change font?
+                toGoStr = str(toGo)
+                self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
+                self.compTextPos = self.compText.get_rect()
+                self.compTextPos.centerx = 480
+                self.compTextPos.centery = 530 #?
+                self.screen.blit(self.compText, self.compTextPos)
             
 
             pygame.display.flip()

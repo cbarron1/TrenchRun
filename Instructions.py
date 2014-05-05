@@ -18,6 +18,50 @@ class Instructions:
         self.instPos = self.instructionsText.get_rect()
         self.instPos.centerx = self.gs.screen.get_rect().centerx
 
+        #Commands
+        self.instFont = pygame.font.Font("media/fonts/Starjedi.ttf", 28)
+        self.controlText = self.instFont.render("Game Controls", 1, (255, 0, 0))
+        self.controlPos = self.controlText.get_rect()
+        self.controlPos.left = 430
+        self.controlPos.centery = 172
+        self.wText = self.instFont.render("W -- up", 1, (255, 255, 255))#W
+        self.wPos = self.wText.get_rect()
+        self.wPos.left = 450
+        self.wPos.centery = 200
+        self.aText = self.instFont.render("A -- left", 1, (255, 255, 255))#A
+        self.aPos = self.aText.get_rect()
+        self.aPos.left = 450
+        self.aPos.centery = 228
+        self.sText = self.instFont.render("S -- down", 1, (255, 255, 255))#S
+        self.sPos = self.sText.get_rect()
+        self.sPos.left = 450
+        self.sPos.centery = 256
+        self.dText = self.instFont.render("D -- right", 1, (255, 255, 255))#D
+        self.dPos = self.dText.get_rect()
+        self.dPos.left = 450
+        self.dPos.centery = 284
+        self.fireText = self.instFont.render("space -- fire", 1, (255, 255, 255))#space
+        self.firePos = self.fireText.get_rect()
+        self.firePos.left = 450
+        self.firePos.centery = 312
+        self.objFont = pygame.font.Font("media/fonts/Starjedi.ttf", 20)
+        self.objText1 = self.objFont.render("objective: Destroy enemy fighters", 1, (255, 255, 255))
+        self.objPos1 = self.objText1.get_rect()
+        self.objPos1.left = 450
+        self.objPos1.centery = 340
+        self.objText2 = self.objFont.render("and laser cannons as you approach", 1, (255, 255, 255))
+        self.objPos2 = self.objText2.get_rect()
+        self.objPos2.left = 470
+        self.objPos2.centery = 360
+        self.objText3 = self.objFont.render("the Death Star's exhaust port. Fire", 1, (255, 255, 255))
+        self.objPos3 = self.objText3.get_rect()
+        self.objPos3.left = 470
+        self.objPos3.centery = 380
+        self.objText4 = self.objFont.render("at it to destroy the Death Star!", 1, (255, 255, 255))
+        self.objPos4 = self.objText4.get_rect()
+        self.objPos4.left = 470
+        self.objPos4.centery = 400
+
         #back button
         self.back_start_font = pygame.font.Font("media/fonts/Starjedi.ttf", 32)
         self.backText = self.back_start_font.render("Back", 1, (255, 255, 255))
@@ -53,6 +97,16 @@ class Instructions:
             self.gs.screen.blit(self.instructionsText, self.instPos)
             self.gs.screen.blit(self.keyImage, self.key_rect)
             self.gs.screen.blit(self.backText, self.backTextPos)
+            self.gs.screen.blit(self.wText, self.wPos)
+            self.gs.screen.blit(self.aText, self.aPos)
+            self.gs.screen.blit(self.sText, self.sPos)
+            self.gs.screen.blit(self.dText, self.dPos)
+            self.gs.screen.blit(self.fireText, self.firePos)
+            self.gs.screen.blit(self.controlText, self.controlPos)
+            self.gs.screen.blit(self.objText1, self.objPos1)
+            self.gs.screen.blit(self.objText2, self.objPos2)
+            self.gs.screen.blit(self.objText3, self.objPos3)
+            self.gs.screen.blit(self.objText4, self.objPos4)
             pygame.display.flip()
             
                 
