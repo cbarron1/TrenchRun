@@ -135,21 +135,27 @@ class LaserTurret(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.gs=gs
         self.image=pygame.image.load("media/turret.png")
-        self.image=pygame.transform.rotate(self.image, 170)
+        self.image=pygame.transform.rotate(self.image, 210)
+        self.image = pygame.transform.scale(self.image, (70,140))
         self.rect=self.image.get_rect()
         self.laserImage=pygame.image.load("media/Laser_Beam.png")
+        self.laserImage=pygame.transform.scale(self.laserImage, (70,400))
         self.laserRect=self.laserImage.get_rect()
-        self.hp = 2
+        self.laserRect.bottom=gs.height-250        
+        self.hp = 4
         self.alive = True
         
         start_x = self.gs.width
         choice = random.randint(1,2)#choose between top or bottom of screen
         if choice == 1:
-            start_y = 65
+            start_y = 30
+            self.image=pygame.transform.rotate(self.image, 180)
         else:
-            start_y = gs.height-65
-        self.laserRect=self.laserRect.move(start_x, self.gs.height / 2)
-        self.rect=self.turretRect.move(start_x, start_y)
+            start_y = gs.height-150
+        #self.laserRect=self.laserRect.move(start_x, self.gs.height / 2)
+        self.rect=self.rect.move(start_x, start_y)
+        self.laserRect=self.laserRect.move(start_x, 200)
+        print "turret made"
 
     def tick(self):
         if self.alive:

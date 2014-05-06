@@ -6,7 +6,7 @@ import sys
 import pygame
 from pygame.locals import *
 from Player import Player
-from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor
+from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor, LaserTurret
 from Unit import Unit
 from TitleScreen import TitleScreen
 import random
@@ -90,26 +90,20 @@ class GameSpace:
         #enter loop
         while True:
             self.clock.tick(self.fps)
-            shipDecider = random.randint(1,100)
+            shipDecider = random.randint(1,200)
             #create enemy ships based on distanceTravelled
             if (shipDecider < 3):
                 interceptor=TieInterceptor(self)
                 self.enemies.append(interceptor)
-                interceptors = interceptors+1
-                #print "interceptor: "
-                #print interceptor
             elif (shipDecider == 4) or (shipDecider== 5):
                 tie=TieFighter(self)
                 self.enemies.append(tie)
-                ties=ties+1
-                #print "tie"
-                #print tie
             elif shipDecider == 6:
                 bomber=TieBomber(self)
                 self.enemies.append(bomber)
-                bombers=bombers+1
-                #print "bomber:"
-                #print bomber
+            elif shipDecider == 7:
+                turret=LaserTurret(self)
+                self.enemies.append(turret)
             #handle user inputs HERE
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -146,6 +140,8 @@ class GameSpace:
                     continue
                 enemy.tick()
                 self.screen.blit(enemy.image, enemy.rect)
+                if enemy.hp == 4:#the enemy is a laser turret
+                    self.screen.blit(enemy.laserImage, enemy.laserRect)
 
             for lazer in self.lazers:
                 lazer.tick()
@@ -163,10 +159,10 @@ class GameSpace:
             self.screen.blit(self.player.image, self.player.rect)
 
             #Navigation Computer graphic
-            if toGo == 200:
+            if toGo == 10:
                 self.navSound = pygame.mixer.Sound("media/audio/computerOff.wav")
                 self.navSound.play()
-            if toGo > 200 :
+            if toGo > 10 :
                 self.screen.blit(self.computerImage, self.compRect)
                 toGoStr = str(toGo)
                 self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
