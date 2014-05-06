@@ -9,21 +9,8 @@ from Player import Player
 from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor, LaserTurret
 from Unit import Unit
 from TitleScreen import TitleScreen
+from GameOver import GameOver
 import random
-
-
-class DragBox:
-    def __init__(self, gs, team):
-        self.gs = gs
-        self.team = team
-        self.start_x, self.start_y = pygame.mouse.get_pos()
-        self.rect = pygame.Rect(self.start_x, self.start_y, 1, 1)
-
-    def tick(self):
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        width = mouse_x - self.start_x
-        height = mouse_y - self.start_y
-        self.rect = pygame.Rect(self.start_x, self.start_y, width, height)
 
 
 class Background(pygame.sprite.Sprite):
@@ -80,13 +67,18 @@ class GameSpace:
     def title(self):
         self.titleScreen = TitleScreen(self)
         self.titleScreen.title()
+
+    def endScreen(self, success):
+        self.finalScreen = GameOver(self)
+        if success == 1:
+            self.finalScreen.gameResult(1)
+        else:
+            self.finalScreen.gameResult(0)
                     
     def main(self):
         distanceTravelled = 0
-        bombers = 0
-        ties = 0
-        interceptors = 0
         toGo = 0
+        success = 1
         #enter loop
         while True:
             self.clock.tick(self.fps)
@@ -125,12 +117,12 @@ class GameSpace:
             self.background.tick()
             self.background2.tick()
 
-            print len(self.enemies)
+            #print len(self.enemies)
              
             if (distanceTravelled % 50) == 0:
                 gameTime = distanceTravelled / 50
                 toGo = 203-gameTime #may want to speed up this timing
-                print gameTime
+                #print gameTime
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
                 
             #control enemy ships
@@ -155,7 +147,12 @@ class GameSpace:
                     self.screen.blit(explosion.image, explosion.rect)
                 else:
                     self.explosions.remove(explosion)
-
+            print "player hp:"
+            print self.player.hp 
+            if self.player.hp <= 0:
+                self.screen.fill(self.black)
+                gameOver_screen = GameOver(self)
+                gameOver_screen.gameResult(1)
             self.screen.blit(self.player.image, self.player.rect)
 
             #Navigation Computer graphic
@@ -175,6 +172,10 @@ class GameSpace:
 
 if __name__ == '__main__':
     gs = GameSpace()
+    #while True:
     gs.title()
     gs.main()
+
+            
+            
 
