@@ -9,7 +9,11 @@ from Player import Player
 from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor
 from Unit import Unit
 from TitleScreen import TitleScreen
+from twisted.internet.protocol import Protocol, Factory
+from twisted.internet import reactor
+from twisted.internet.defer import DeferredQueue
 import random
+
 
 class DragBox:
     def __init__(self, gs, team):
@@ -68,6 +72,12 @@ class GameSpace:
         self.explosions = list()
         self.box = list()
 
+        self.computerImage = pygame.image.load("media/navComputer.png")
+        self.compRect = self.computerImage.get_rect()
+        self.compRect.centerx = self.screen.get_rect().centerx # center of screen
+        self.compRect.centery = 465 #?
+        self.navCompFont = pygame.font.Font("media/fonts/Starjedi.ttf", 15) # change font?
+
         self.fps = 60
 
     def title(self):
@@ -76,9 +86,9 @@ class GameSpace:
                     
     def main(self):
         distanceTravelled = 0
-        bombers=0
-        ties=0
-        interceptors=0
+        bombers = 0
+        ties = 0
+        interceptors = 0
         toGo = 0
         #enter loop
         while True:
@@ -115,51 +125,36 @@ class GameSpace:
                     self.player.onKeyDown(event.key)
                 elif event.type == KEYUP:
                     self.player.onKeyUp(event.key)
-                elif event.type == MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        drag_box = DragBox(self, 1)
-                        self.box.append(drag_box)
-                elif event.type == MOUSEBUTTONUP:
-                    if event.button == 1:
-                        if self.box:
-                            print Rect.colliderect(self.box[0].rect, self.enemy.rect)
-                            self.box.pop()
 
             self.player.tick()
-            self.screen.fill(self.black)
-            self.enemy.tick()
 
+            self.screen.fill(self.black)
             self.screen.blit(self.background.image, self.background.rect)
             self.screen.blit(self.background2.image, self.background2.rect)
             self.background.tick()
             self.background2.tick()
-            
+
+            print len(self.enemies)
              
             if (distanceTravelled % 50) == 0:
                 gameTime = distanceTravelled / 50
-                toGo = 2500-gameTime #may want to speed up this timing
+                toGo = 203-gameTime #may want to speed up this timing
                 print gameTime
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
                 
             #control enemy ships
             for enemy in self.enemies:
-                if enemy.shipType == 1:
-                    enemy.tick()
-                    self.screen.blit(bomber.bomberImage, bomber.bomberRect)
-                elif enemy.shipType == 2:
-                    enemy.tick()
-                    self.screen.blit(tie.tieImage, tie.tieRect)
-                elif enemy.shipType ==3:
-                    enemy.tick()
-                    self.screen.blit(interceptor.interceptorImage, interceptor.interceptorRect)
+                if enemy.alive == False or enemy.rect.x < 0:
+                    self.enemies.remove(enemy)
+                    continue
+                enemy.tick()
+                self.screen.blit(enemy.image, enemy.rect)
+
             for lazer in self.lazers:
                 lazer.tick()
                 self.screen.blit(lazer.image, lazer.rect)
                 if lazer.rect.x > self.width or lazer.rect.y > self.height or lazer.rect.x < 0 or lazer.rect.y < 0:
                     self.lazers.remove(lazer)
-                    
-            if self.enemy.alive:
-                self.screen.blit(self.enemy.image, self.enemy.rect)
 
             for explosion in self.explosions:
                 explosion.tick()
@@ -168,30 +163,20 @@ class GameSpace:
                 else:
                     self.explosions.remove(explosion)
 
-            for item in self.box:
-                item.tick()
-                pygame.draw.rect(self.screen, (50, 255, 50), item.rect, 1)
-
             self.screen.blit(self.player.image, self.player.rect)
 
             #Navigation Computer graphic
             if toGo == 200:
-                self.navSound = pygame.mixer.Sound("media/audio/computerOff.png")
+                self.navSound = pygame.mixer.Sound("media/audio/computerOff.wav")
                 self.navSound.play()
-            if toGo > 200 : 
-                self.computerImage = pygame.image.load("media/navComputer.png")
-                self.compRect = self.computerImage.get_rect()
-                self.compRect.centerx = 480 # center of screen
-                self.compRect.centery = 465 #?
+            if toGo > 200 :
                 self.screen.blit(self.computerImage, self.compRect)
-                self.navCompFont = pygame.font.Font("media/fonts/Starjedi.ttf", 15) # change font?
                 toGoStr = str(toGo)
                 self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
                 self.compTextPos = self.compText.get_rect()
                 self.compTextPos.centerx = 480
                 self.compTextPos.centery = 530 #?
                 self.screen.blit(self.compText, self.compTextPos)
-            
 
             pygame.display.flip()
 
