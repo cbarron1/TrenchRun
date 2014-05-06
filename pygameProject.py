@@ -9,9 +9,6 @@ from Player import Player
 from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor
 from Unit import Unit
 from TitleScreen import TitleScreen
-from twisted.internet.protocol import Protocol, Factory
-from twisted.internet import reactor
-from twisted.internet.defer import DeferredQueue
 import random
 
 

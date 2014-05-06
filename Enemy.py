@@ -48,23 +48,22 @@ class TieFighter(pygame.sprite.Sprite):
     def __init__(self, gs= None):
             pygame.sprite.Sprite.__init__(self)
             self.gs=gs
-            self.tieImage=pygame.image.load("media/Empire/sw_tief.png")
+            self.image=pygame.image.load("media/Empire/sw_tief.png")
             #self.tieImage = pygame.transform.scale(self.tieImage, (,)) not sure what size to do
-            self.tieImage=pygame.transform.rotate(self.tieImage, -90)
+            self.image=pygame.transform.rotate(self.image, -90)
 
-            self.tieRect=self.tieImage.get_rect()
-            self.orig_tImage=self.tieImage
+            self.rect=self.image.get_rect()
             self.shipType = 2 #differentiate between ship types
             self.hp = 2
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
-            self.tieRect=self.tieRect.move(start_x, start_y)
+            self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
         if self.alive:
-            self.tieRect = self.tieRect.move(-5, 0)
-            collision_list = Rect.collidelistall(self.tieRect, self.gs.lazers)
+            self.rect = self.rect.move(-5, 0)
+            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
             for collision in collision_list:
                 if self.gs.lazers[collision].active:
                     self.gs.lazers[collision].active = False
@@ -72,28 +71,27 @@ class TieFighter(pygame.sprite.Sprite):
             if self.hp <= 0:
                 self.gs.explosion_sound.play()
                 self.alive = False
-                new_explosion = Explosion(self.tieRect.x, self.tieRect.y)
+                new_explosion = Explosion(self.rect.x, self.rect.y)
                 self.gs.explosions.append(new_explosion)
 
 class TieBomber(pygame.sprite.Sprite):
     def __init__(self, gs= None):
             pygame.sprite.Sprite.__init__(self)
             self.gs=gs
-            self.bomberImage=pygame.image.load("media/Empire/tie_bomber.png")
-            self.bomberImage=pygame.transform.rotate(self.bomberImage, -90)
-            self.bomberRect=self.bomberImage.get_rect()
-            self.orig_bImage=self.bomberImage#not sure if this is necessary
+            self.image=pygame.image.load("media/Empire/tie_bomber.png")
+            self.image=pygame.transform.rotate(self.image, 90)
+            self.rect=self.image.get_rect()
             self.shipType = 1 #differentiate between ship types
             self.hp = 3
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
-            self.bomberRect=self.bomberRect.move(start_x, start_y)
+            self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
         if self.alive:
-            self.bomberRect = self.bomberRect.move(-5, 0)
-            collision_list = Rect.collidelistall(self.bomberRect, self.gs.lazers)
+            self.rect = self.rect.move(-5, 0)
+            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
             for collision in collision_list:
                 if self.gs.lazers[collision].active:
                     self.gs.lazers[collision].active = False
@@ -101,28 +99,27 @@ class TieBomber(pygame.sprite.Sprite):
             if self.hp <= 0:
                 self.gs.explosion_sound.play()
                 self.alive = False
-                new_explosion = Explosion(self.bomberRect.x, self.bomberRect.y)
+                new_explosion = Explosion(self.rect.x, self.rect.y)
                 self.gs.explosions.append(new_explosion)
 
 class TieInterceptor(pygame.sprite.Sprite):
     def __init__(self, gs= None):
             pygame.sprite.Sprite.__init__(self)
             self.gs=gs
-            self.interceptorImage=pygame.image.load("media/Empire/tie_interceptor.png")
-            self.interceptorImage=pygame.transform.rotate(self.interceptorImage, -90)
-            self.interceptorRect=self.interceptorImage.get_rect()
-            self.orig_iImage=self.interceptorImage#not sure if this is necessary
+            self.image=pygame.image.load("media/Empire/tie_interceptor.png")
+            self.image=pygame.transform.rotate(self.image, 90)
+            self.rect=self.image.get_rect()
             self.shipType = 3 #differentiate between ship types
             self.hp = 1
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
-            self.interceptorRect=self.interceptorRect.move(start_x, start_y)
+            self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
         if self.alive:
-            self.interceptorRect = self.interceptorRect.move(-5, 0)
-            collision_list = Rect.collidelistall(self.interceptorRect, self.gs.lazers)
+            self.rect = self.rect.move(-5, 0)
+            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
             for collision in collision_list:
                 if self.gs.lazers[collision].active:
                     self.gs.lazers[collision].active = False
@@ -130,16 +127,16 @@ class TieInterceptor(pygame.sprite.Sprite):
             if self.hp <= 0:
                 self.gs.explosion_sound.play()
                 self.alive = False
-                new_explosion = Explosion(self.interceptorRect.x, self.interceptorRect.y)
+                new_explosion = Explosion(self.rect.x, self.rect.y)
                 self.gs.explosions.append(new_explosion)
 
 class LaserTurret(pygame.sprite.Sprite):
     def __init__(self, gs = None):
         pygame.sprite.Sprite.__init__(self)
         self.gs=gs
-        self.turretImage=pygame.image.load("media/turret.png")
-        self.turretImage=pygame.transform.rotate(self.turretImage, 170)
-        self.turretRect=self.turretImage.get_rect()
+        self.image=pygame.image.load("media/turret.png")
+        self.image=pygame.transform.rotate(self.image, 170)
+        self.rect=self.image.get_rect()
         self.laserImage=pygame.image.load("media/Laser_Beam.png")
         self.laserRect=self.laserImage.get_rect()
         self.hp = 2
@@ -152,13 +149,13 @@ class LaserTurret(pygame.sprite.Sprite):
         else:
             start_y = gs.height-65
         self.laserRect=self.laserRect.move(start_x, self.gs.height / 2)
-        self.turretRect=self.turretRect.move(start_x, start_y)
+        self.rect=self.turretRect.move(start_x, start_y)
 
     def tick(self):
         if self.alive:
-            self.turretRect=self.turretRect.move(-3,0)
+            self.rect=self.rect.move(-3,0)
             self.laserRect=self.laserRect.move(-3,0)
-            collision_list = Rect.collidelistall(self.turretRect, self.gs.lazers)
+            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
             for collision in collision_list:
                 if self.gs.lazers[collision].active:
                     self.gs.lazers[collision].active = False
@@ -166,6 +163,5 @@ class LaserTurret(pygame.sprite.Sprite):
             if self.hp <= 0:
                 self.gs.explosion_sound.play()
                 self.alive = False
-                new_explosion = Explosion(self.turretRect.x, self.turretRect.y)
+                new_explosion = Explosion(self.rect.x, self.rect.y)
                 self.gs.explosions.append(new_explosion)
-        
