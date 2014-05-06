@@ -49,7 +49,7 @@ class TitleScreen:
         #while title running variable
           #variable to keep track of when title options should be running
         while self.titleRunning:
-            self.imperial_music.play()
+            #self.imperial_music.play()
             for event in pygame.event.get():
                 if event.type == QUIT:  #if user clicks red x in corner, exit
                     pygame.quit()
@@ -66,7 +66,7 @@ class TitleScreen:
                         if self.player1pos.collidepoint(mouse_x, mouse_y):
                             print "First option pressed"
                             self.gs.screen.fill(self.gs.black)
-                            self.imperial_music.stop()
+                            #self.imperial_music.stop()
                             selection_screen = ShipSelect(self.gs)
                             selection_screen.ship_select()
                             #make second 2 options disappear, show ship options as new buttons
