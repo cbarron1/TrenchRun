@@ -55,7 +55,7 @@ class TieFighter(pygame.sprite.Sprite):
             self.tieRect=self.tieImage.get_rect()
             self.orig_tImage=self.tieImage
             self.shipType = 2 #differentiate between ship types
-            self.hp = 30
+            self.hp = 2
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
@@ -84,7 +84,7 @@ class TieBomber(pygame.sprite.Sprite):
             self.bomberRect=self.bomberImage.get_rect()
             self.orig_bImage=self.bomberImage#not sure if this is necessary
             self.shipType = 1 #differentiate between ship types
-            self.hp = 40
+            self.hp = 3
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
@@ -113,7 +113,7 @@ class TieInterceptor(pygame.sprite.Sprite):
             self.interceptorRect=self.interceptorImage.get_rect()
             self.orig_iImage=self.interceptorImage#not sure if this is necessary
             self.shipType = 3 #differentiate between ship types
-            self.hp = 20
+            self.hp = 1
             self.alive = True
             start_x = self.gs.width
             start_y = random.randint(65, gs.height-65)
@@ -132,3 +132,40 @@ class TieInterceptor(pygame.sprite.Sprite):
                 self.alive = False
                 new_explosion = Explosion(self.interceptorRect.x, self.interceptorRect.y)
                 self.gs.explosions.append(new_explosion)
+
+class LaserTurret(pygame.sprite.Sprite):
+    def __init__(self, gs = None):
+        pygame.sprite.Sprite.__init__(self)
+        self.gs=gs
+        self.turretImage=pygame.image.load("media/turret.png")
+        self.turretImage=pygame.transform.rotate(self.turretImage, 170)
+        self.turretRect=self.turretImage.get_rect()
+        self.laserImage=pygame.image.load("media/Laser_Beam.png")
+        self.laserRect=self.laserImage.get_rect()
+        self.hp = 2
+        self.alive = True
+        
+        start_x = self.gs.width
+        choice = random.randint(1,2)#choose between top or bottom of screen
+        if choice == 1:
+            start_y = 65
+        else:
+            start_y = gs.height-65
+        self.laserRect=self.laserRect.move(start_x, self.gs.height / 2)
+        self.turretRect=self.turretRect.move(start_x, start_y)
+
+    def tick(self):
+        if self.alive:
+            self.turretRect=self.turretRect.move(-3,0)
+            self.laserRect=self.laserRect.move(-3,0)
+            collision_list = Rect.collidelistall(self.turretRect, self.gs.lazers)
+            for collision in collision_list:
+                if self.gs.lazers[collision].active:
+                    self.gs.lazers[collision].active = False
+                    self.hp -= 1
+            if self.hp <= 0:
+                self.gs.explosion_sound.play()
+                self.alive = False
+                new_explosion = Explosion(self.turretRect.x, self.turretRect.y)
+                self.gs.explosions.append(new_explosion)
+        

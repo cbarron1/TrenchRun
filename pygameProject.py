@@ -9,6 +9,7 @@ from Player import Player
 from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor
 from Unit import Unit
 from TitleScreen import TitleScreen
+import random
 
 class DragBox:
     def __init__(self, gs, team):
@@ -82,21 +83,21 @@ class GameSpace:
         #enter loop
         while True:
             self.clock.tick(self.fps)
-            
+            shipDecider = random.randint(1,100)
             #create enemy ships based on distanceTravelled
-            if ((distanceTravelled % 50) < 3):
+            if (shipDecider < 3):
                 interceptor=TieInterceptor(self)
                 self.enemies.append(interceptor)
                 interceptors = interceptors+1
                 #print "interceptor: "
                 #print interceptor
-            elif ((distanceTravelled % 50) == 4) or ((distanceTravelled % 50)== 5):
+            elif (shipDecider == 4) or (shipDecider== 5):
                 tie=TieFighter(self)
                 self.enemies.append(tie)
                 ties=ties+1
                 #print "tie"
                 #print tie
-            elif (distanceTravelled % 50) == 6:
+            elif shipDecider == 6:
                 bomber=TieBomber(self)
                 self.enemies.append(bomber)
                 bombers=bombers+1
