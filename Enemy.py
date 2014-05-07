@@ -81,7 +81,7 @@ class TieBomber(pygame.sprite.Sprite):
             self.image=pygame.image.load("media/Empire/tie_bomber.png")
             self.image=pygame.transform.rotate(self.image, 90)
             self.rect=self.image.get_rect()
-            self.shipType = 1 #differentiate between ship types
+            self.shipType = 3 #differentiate between ship types
             self.hp = 3
             self.alive = True
             start_x = self.gs.width
@@ -109,7 +109,7 @@ class TieInterceptor(pygame.sprite.Sprite):
             self.image=pygame.image.load("media/Empire/tie_interceptor.png")
             self.image=pygame.transform.rotate(self.image, 90)
             self.rect=self.image.get_rect()
-            self.shipType = 3 #differentiate between ship types
+            self.shipType = 1 #differentiate between ship types
             self.hp = 1
             self.alive = True
             start_x = self.gs.width
@@ -141,7 +141,8 @@ class LaserTurret(pygame.sprite.Sprite):
         self.laserImage=pygame.image.load("media/Laser_Beam.png")
         self.laserImage=pygame.transform.scale(self.laserImage, (70,400))
         self.laserRect=self.laserImage.get_rect()
-        self.laserRect.bottom=gs.height-250        
+        self.laserRect.bottom=gs.height-250
+        self.shipType = 4
         self.hp = 4
         self.alive = True
         

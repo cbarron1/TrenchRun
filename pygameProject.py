@@ -240,13 +240,13 @@ class GameSpace:
                 continue
             enemy.tick()
             self.screen.blit(enemy.image, enemy.rect)
-            if enemy.hp == 1:
+            if enemy.shipType == 1:
                 c_interceptors.append(enemy.rect)
-            elif enemy.hp == 2:
+            elif enemy.shipType == 2:
                 c_ties.append(enemy.rect)
-            elif enemy.hp == 3:
+            elif enemy.shipType == 3:
                 c_bombers.append(enemy.rect)
-            elif enemy.hp == 4:#the enemy is a laser turret
+            elif enemy.shipType== 4:#the enemy is a laser turret
                 self.screen.blit(enemy.laserImage, enemy.laserRect)
                 c_turrets.append(enemy.rect)
                 c_tlasers.append(enemy.laserRect)
