@@ -15,17 +15,22 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image, (45, 39))
             self.move_speed = 15
             self.hp = 10
+            self.shot_delay = 5
         elif self.player_type == 2:
             self.image = pygame.image.load("media/Rebel/seraph.png")
             self.image = pygame.transform.scale(self.image, (80, 60))
             self.move_speed = 10
             self.hp = 30
+            self.shot_delay = 10
         elif self.player_type == 3:
             self.image = pygame.image.load("media/Rebel/falcon.png")
             self.image = pygame.transform.scale(self.image, (80, 105))
             self.move_speed = 5
             self.hp = 50
+            self.shot_delay = 15
         self.image = pygame.transform.rotate(self.image, -90)
+
+        self.shot_counter = self.shot_delay
 
         self.rect = self.image.get_rect()
         self.rect.centery = self.gs.screen.get_rect().centery
@@ -61,9 +66,12 @@ class Player(pygame.sprite.Sprite):
                 self.gs.explosions.append(new_explosion)
                 #need procedure for ending game
 
-        if self.to_fire:
+        if self.to_fire and self.shot_counter >= self.shot_delay:
             new_lazer = Lazer(self.gs, self)
             self.gs.lazers.append(new_lazer)
+            self.shot_counter = 0
+
+        self.shot_counter += 1
 
         self.move()
 

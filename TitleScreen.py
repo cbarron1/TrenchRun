@@ -73,6 +73,12 @@ class TitleScreen:
                         #if mouse pos is in multiplayer box, wait for connection (?)
                         if self.player2pos.collidepoint(mouse_x, mouse_y):
                             print "Waiting for connection"
+                            if mouse_x < self.gs.width/2:
+                                self.gs.HOST = 1
+                                self.titleRunning = False
+                            else:
+                                self.gs.HOST = 2
+                                self.titleRunning = False
                             self.gs.screen.fill(self.gs.black)
                             #Add networking elements here
                         #if mouse pos is in instructions box, open instructions page
