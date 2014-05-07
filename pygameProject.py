@@ -6,7 +6,7 @@ import sys
 import pygame
 from pygame.locals import *
 from Player import Player
-from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor, LaserTurret
+from Enemy import Enemy, TieFighter, TieBomber, TieInterceptor, LaserTurret, ExhaustPort
 from Unit import Unit
 from TitleScreen import TitleScreen
 from GameOver import GameOver
@@ -121,7 +121,7 @@ class GameSpace:
              
             if (distanceTravelled % 50) == 0:
                 gameTime = distanceTravelled / 50
-                toGo = 203-gameTime #may want to speed up this timing
+                toGo = 200-(gameTime) #may want to speed up this timing
                 #print gameTime
             distanceTravelled = distanceTravelled + 1 #add to distance travelled
                 
@@ -149,17 +149,17 @@ class GameSpace:
                     self.explosions.remove(explosion)
             print "player hp:"
             print self.player.hp 
-            if self.player.hp <= 0:
-                self.screen.fill(self.black)
-                gameOver_screen = GameOver(self)
-                gameOver_screen.gameResult(1)
+            #if self.player.hp <= 0:
+             #   self.screen.fill(self.black)
+              #  gameOver_screen = GameOver(self)
+               # gameOver_screen.gameResult(1)
             self.screen.blit(self.player.image, self.player.rect)
 
-            #Navigation Computer graphic
+            #Navigation Computer graphic--turn off when nearing target!
             if toGo == 10:
                 self.navSound = pygame.mixer.Sound("media/audio/computerOff.wav")
                 self.navSound.play()
-            if toGo > 10 :
+            if toGo > 0 :### change this back!
                 self.screen.blit(self.computerImage, self.compRect)
                 toGoStr = str(toGo)
                 self.compText = self.navCompFont.render(toGoStr, 1, (255, 0, 0))
@@ -167,7 +167,22 @@ class GameSpace:
                 self.compTextPos.centerx = 480
                 self.compTextPos.centery = 530 #?
                 self.screen.blit(self.compText, self.compTextPos)
-
+            #Create Exhaust Port if toGo < 5
+            if toGo == 5:
+                target=ExhaustPort(self)
+                self.screen.blit(target.image, target.rect)
+            if toGo < 5 and target.rect.x < 0: #if you passed the target and didn't hit it
+                self.screen.fill(self.black)
+                gameOver_screen = GameOver(self)
+                gameOver_screen.gameResult(0)
+            if toGo < 5:
+                self.screen.blit(target.image, target.rect)
+                target.tick()
+                if target.alive == False:
+                    self.screen.fill(self.black)
+                    gameOver_screen = GameOver(self)
+                    gameOver_screen.gameResult(1)
+                enemy.tick()
             pygame.display.flip()
 
 if __name__ == '__main__':

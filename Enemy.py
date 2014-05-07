@@ -57,7 +57,7 @@ class TieFighter(pygame.sprite.Sprite):
             self.hp = 2
             self.alive = True
             start_x = self.gs.width
-            start_y = random.randint(65, gs.height-65)
+            start_y = random.randint(65, gs.height-85)
             self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
@@ -85,7 +85,7 @@ class TieBomber(pygame.sprite.Sprite):
             self.hp = 3
             self.alive = True
             start_x = self.gs.width
-            start_y = random.randint(65, gs.height-65)
+            start_y = random.randint(65, gs.height-85)
             self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
@@ -113,7 +113,7 @@ class TieInterceptor(pygame.sprite.Sprite):
             self.hp = 1
             self.alive = True
             start_x = self.gs.width
-            start_y = random.randint(65, gs.height-65)
+            start_y = random.randint(65, gs.height-85)
             self.rect=self.rect.move(start_x, start_y)
 
     def tick(self):
@@ -159,8 +159,8 @@ class LaserTurret(pygame.sprite.Sprite):
 
     def tick(self):
         if self.alive:
-            self.rect=self.rect.move(-3,0)
-            self.laserRect=self.laserRect.move(-3,0)
+            self.rect=self.rect.move(-1,0)
+            self.laserRect=self.laserRect.move(-1,0)
             collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
             for collision in collision_list:
                 if self.gs.lazers[collision].active:
@@ -171,3 +171,30 @@ class LaserTurret(pygame.sprite.Sprite):
                 self.alive = False
                 new_explosion = Explosion(self.rect.x, self.rect.y)
                 self.gs.explosions.append(new_explosion)
+
+class ExhaustPort(pygame.sprite.Sprite):
+    def __init__(self, gs=None):
+        pygame.sprite.Sprite.__init__(self)
+        self.gs = gs
+        self.image=pygame.image.load("media/exhaustPort.png")
+        self.rect=self.image.get_rect()
+        self.hp = 1
+        self.alive = True
+        start_y = self.gs.height / 2
+        start_x = self.gs.width
+        self.rect=self.rect.move(start_x, start_y)
+
+    def tick(self):
+        if self.alive:
+            self.rect=self.rect.move(-1,0)
+        collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
+        for collision in collision_list:
+            if self.gs.lazers[collision].active:
+                self.gs.lazers[collision].active = False
+                self.hp -= 1
+            if self.hp <= 0:
+                self.gs.explosion_sound.play()
+                self.alive = False
+                new_explosion = Explosion(self.rect.x, self.rect.y)
+                self.gs.explosions.append(new_explosion)
+        
