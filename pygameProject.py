@@ -250,12 +250,12 @@ class GameSpace:
                 c_turrets.append(enemy.rect)
                 c_tlasers.append(enemy.laserRect)
             #check collision with player
-            if enemy.rect.colliderect(player.rect):
+            if enemy.rect.colliderect(self.player.rect):
                 enemy.alive = False
-                player1.hp -= 1
-            if enemy.rect.colliderect(player2.rect):
+                self.player.hp -= 1
+            if enemy.rect.colliderect(self.player2.rect):
                 enemy.alive = False
-                player2.hp -= 1
+                self.player2.hp -= 1
 
         for lazer in self.lazers:
             lazer.tick()
@@ -272,10 +272,10 @@ class GameSpace:
             else:
                 self.explosions.remove(explosion)
 
-        #if self.player.hp <= 0:
-         #   self.screen.fill(self.black)
-          #  gameOver_screen = GameOver(self)
-           # gameOver_screen.gameResult(1)
+        if self.player.hp <= 0:
+            self.screen.fill(self.black)
+            gameOver_screen = GameOver(self)
+            gameOver_screen.gameResult(1)
         self.screen.blit(self.player.image, self.player.rect)
         if self.HOST is not 3:
             self.screen.blit(self.player2.image, self.player2.rect)
