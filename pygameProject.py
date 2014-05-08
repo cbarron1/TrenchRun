@@ -49,7 +49,6 @@ class GameClientConn(Protocol):
         print "Connected to host"
 
     def dataReceived(self, data):
-        print data
         x = pickle.loads(data)
         #reactor.callLater(1.0/60.0, gs.client_blit, data)
         gs.client_blit_list = x
@@ -167,6 +166,10 @@ class GameSpace:
             self.finalScreen.gameResult(0)
                     
     def main(self):
+        
+        my_players = list()
+        my_players.append(self.player1)
+        my_players.append(self.player2)
 
         ######################################################
         ### ALL LISTS NEEDED FOR BLITTING OF CLIENT PLAYER ###
@@ -250,6 +253,13 @@ class GameSpace:
                 self.screen.blit(enemy.laserImage, enemy.laserRect)
                 c_turrets.append(enemy.rect)
                 c_tlasers.append(enemy.laserRect)
+            #check collision with player
+            if enemy.rect.colliderect(player1.rect):
+                enemy.alive = False
+                player1.hp -= 1
+            if enemy.rect.colliderect(player2.rect):
+                enemy.alive = False
+                player2.hp -= 1
 
         for lazer in self.lazers:
             lazer.tick()
