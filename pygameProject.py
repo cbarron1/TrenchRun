@@ -275,7 +275,7 @@ class GameSpace:
         if self.player.hp <= 0:
             self.screen.fill(self.black)
             gameOver_screen = GameOver(self)
-            gameOver_screen.gameResult(1)
+            gameOver_screen.gameResult(0)
         self.screen.blit(self.player.image, self.player.rect)
         if self.HOST is not 3:
             self.screen.blit(self.player2.image, self.player2.rect)
