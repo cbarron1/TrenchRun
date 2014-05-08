@@ -8,6 +8,7 @@ class TitleScreen:
     def __init__(self, gs):
         self.gs = gs
         self.titleRunning = True
+        self.connections = False
         
         self.titlefont = pygame.font.Font("media/fonts/Starjedi.ttf", 86)
         self.titleText = self.titlefont.render("Trench Run", 1, (255, 255, 255))
@@ -32,6 +33,17 @@ class TitleScreen:
         self.instpos = self.instructionText.get_rect()
         self.instpos.centerx = self.gs.screen.get_rect().centerx
         self.instpos.y = 365
+
+        #host/join
+        self.hostText = self.playerfont.render("host game", 1, (255, 255, 255))
+        self.hostPos = self.hostText.get_rect()
+        self.hostPos.centerx = self.gs.screen.get_rect().width / 3
+        self.hostPos.y = 265
+
+        self.joinText = self.playerfont.render("join game", 1, (255, 255, 255))
+        self.joinPos = self.joinText.get_rect()
+        self.joinPos.centerx = 2* self.gs.screen.get_rect().width / 3
+        self.joinPos.y = 265
 
         #blit text elements to screen
         self.gs.screen.blit(self.titleText, self.titlepos)
@@ -72,13 +84,7 @@ class TitleScreen:
                             #make second 2 options disappear, show ship options as new buttons
                         #if mouse pos is in multiplayer box, wait for connection (?)
                         if self.player2pos.collidepoint(mouse_x, mouse_y):
-                            print "Waiting for connection"
-                            if mouse_x < self.gs.width/2:
-                                self.gs.HOST = 1
-                                self.titleRunning = False
-                            else:
-                                self.gs.HOST = 2
-                                self.titleRunning = False
+                            self.connections = not self.connections
                             self.gs.screen.fill(self.gs.black)
                             #Add networking elements here
                         #if mouse pos is in instructions box, open instructions page
@@ -89,12 +95,24 @@ class TitleScreen:
                             instruction_screen = Instructions(self.gs)
                             instruction_screen.readInstructions()
                             #self.titleRunning = False
+                        if self.hostPos.collidepoint(mouse_x, mouse_y) and self.connections:
+                            selection_screen = ShipSelect(self.gs)
+                            selection_screen.ship_select()
+                            self.gs.HOST = 1
+                        elif self.joinPos.collidepoint(mouse_x, mouse_y) and self.connections:
+                            print "NOT HOST"
+                            self.gs.HOST = 2
+                            self.titleRunning = False
 
             self.gs.screen.fill(self.gs.black)
             self.gs.screen.blit(self.titleText, self.titlepos)
-            self.gs.screen.blit(self.player1Text, self.player1pos)
-            self.gs.screen.blit(self.player2Text, self.player2pos)
-            self.gs.screen.blit(self.instructionText, self.instpos)
+            if not self.connections:
+                self.gs.screen.blit(self.player1Text, self.player1pos)
+                self.gs.screen.blit(self.player2Text, self.player2pos)
+                self.gs.screen.blit(self.instructionText, self.instpos)
+            else:
+                self.gs.screen.blit(self.hostText, self.hostPos)
+                self.gs.screen.blit(self.joinText, self.joinPos)
 
             pygame.display.flip()
         
