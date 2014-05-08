@@ -346,6 +346,10 @@ class GameSpace:
                 pygame.quit()
                 return
             elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    reactor.stop()
+                    return
                 event_info = [KEYDOWN, event.key]
                 s = pickle.dumps(event_info)
                 connections['host'].transport.write(str(s))
