@@ -166,10 +166,6 @@ class GameSpace:
             self.finalScreen.gameResult(0)
                     
     def main(self):
-        
-        my_players = list()
-        my_players.append(self.player1)
-        my_players.append(self.player2)
 
         ######################################################
         ### ALL LISTS NEEDED FOR BLITTING OF CLIENT PLAYER ###
@@ -254,7 +250,7 @@ class GameSpace:
                 c_turrets.append(enemy.rect)
                 c_tlasers.append(enemy.laserRect)
             #check collision with player
-            if enemy.rect.colliderect(player1.rect):
+            if enemy.rect.colliderect(player.rect):
                 enemy.alive = False
                 player1.hp -= 1
             if enemy.rect.colliderect(player2.rect):
