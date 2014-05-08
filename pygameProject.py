@@ -376,7 +376,6 @@ if __name__ == '__main__':
     elif gs.HOST == 2:
         #read input from command line
         hostname = str(raw_input("Enter Host Address: "))
-        hostname = '10.176.25.37'
         reactor.connectTCP(hostname, 9100, GameClientConnFactory())
         reactor.callLater(1.0/60.0, gs.clientMain)
     elif gs.HOST == 3:
