@@ -271,6 +271,8 @@ class GameSpace:
             c_lasers.append(lazer.rect)
             if lazer.rect.x > self.width or lazer.rect.y > self.height or lazer.rect.x < 0 or lazer.rect.y < 0:
                 self.lazers.remove(lazer)
+            if lazer.active = False
+                self.lazers.remove(lazer)
 
         for explosion in self.explosions:
             explosion.tick()
