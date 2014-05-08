@@ -49,9 +49,17 @@ class GameClientConn(Protocol):
         print "Connected to host"
 
     def dataReceived(self, data):
-        x = pickle.loads(data)
-        #reactor.callLater(1.0/60.0, gs.client_blit, data)
-        gs.client_blit_list = x
+        if data == 'gameover':
+            print "GAME OVER"
+            gameOver_screen = GameOver(gs)
+            gameOver_screen.gameResult(0)
+        elif data == 'win':
+            print "YOU WIN"
+            gameOver_screen = GameOver(gs)
+            gameOver_screen.gameResult(1)
+        else:
+            x = pickle.loads(data)
+            gs.client_blit_list = x
 
     def connectionLost(self, reason):
         print "Connection Lost"
@@ -316,6 +324,7 @@ class GameSpace:
             self.screen.blit(target.image, target.rect)
         if self.toGo < 5 and target.rect.x < 0: #if you passed the target and didn't hit it
             self.screen.fill(self.black)
+            connections['client'].transport.write('gameover')
             gameOver_screen = GameOver(self)
             gameOver_screen.gameResult(0)
         if self.toGo < 5:
@@ -323,6 +332,7 @@ class GameSpace:
             target.tick()
             if target.alive == False:
                 self.screen.fill(self.black)
+                connections['client'].transport.write('win')
                 gameOver_screen = GameOver(self)
                 gameOver_screen.gameResult(1)
 
