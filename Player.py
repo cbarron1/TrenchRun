@@ -52,12 +52,6 @@ class Player(pygame.sprite.Sprite):
         mx, my = pygame.mouse.get_pos()
 
         if self.alive:
-            collision_list = Rect.collidelistall(self.rect, self.gs.lazers)
-            for collision in collision_list:
-                if self.gs.lazers[collision].active:
-                    self.gs.lazers[collision].active = False
-                    self.hp -= 1
-
             if self.hp <= 0:
                 #remove image of ship
                 self.gs.explosion_sound.play()
